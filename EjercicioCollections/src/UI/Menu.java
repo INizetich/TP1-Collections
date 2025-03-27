@@ -12,7 +12,7 @@ public class Menu {
         boolean loop = true;
         Scanner scn = new Scanner(System.in);
         String nombreCompleto;
-        Agenda agenda = new Agenda();
+        
 
         do {
             textMenu();
@@ -69,6 +69,18 @@ public class Menu {
                     clearConsole();
                     break;
 
+                    case 5:
+                    modificarNum();
+                    try{
+                        System.in.read();
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    menuPausa();
+                       clearConsole();
+
+                    break;
+
                 case 0:
                     loop = false;
                     clearConsole();
@@ -80,6 +92,7 @@ public class Menu {
                     System.out.println("Elija una opción válida.");
                     menuPausa();
                     clearConsole();
+                    scn.close();
                     break;
 
             }
@@ -92,6 +105,7 @@ public class Menu {
         System.out.println("2- Eliminar Contacto");
         System.out.println("3- Buscar Contacto");
         System.out.println("4- Listar Contactos");
+        System.out.println("5- Modificar numero de Contacto");
         System.out.println("\n0- Salir");
         System.out.println("-----------------------------\n");
         System.out.println("\nIngrese una opción: ");
@@ -114,7 +128,7 @@ public class Menu {
         String nroTelefono = scn.nextLine();
 
         Contacto c = new Contacto(nombre, apellido, nroTelefono);
-
+scn.close();
         return c;
     }
 
@@ -125,8 +139,9 @@ public class Menu {
         String nombre = scn.nextLine();
         System.out.println("Ingrese apellido: ");
         String apellido = scn.nextLine();
-
+        scn.close();
         return nombre+apellido;
+   
     }
 
     private static void menuPausa(){
@@ -135,5 +150,29 @@ public class Menu {
         }catch (InterruptedException e){
             e.printStackTrace();
         }
+    }
+
+
+    public static void  modificarNum(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("ingresa el nombre del contacto a modificar");
+        String nombreContacto = ingresarNombreCompleto();
+         Contacto contacto = Agenda.buscarPorNombre(nombreContacto);
+
+         if(contacto !=null){
+            System.out.println(Agenda.buscarPorNombre(nombreContacto).toString());
+            System.out.println("ingrese el nuevo numero de telefono del contacto: ");
+            String nuevoNumero = scanner.nextLine();
+            if (Agenda.modificarNumero(nombreContacto, nuevoNumero)){
+                System.out.println("numero de telefono modificado con exito");
+            }else{
+                System.out.println("el numero de telefono no se pudo modificar.");
+            }
+         }else{
+            System.out.println("el contacto no existe.");
+         }
+         System.out.println("Pulse una tecla para continuar...");
+         scanner.close();
+
     }
 }
