@@ -1,7 +1,6 @@
 package Models;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Agenda {
     private static HashMap<String, Contacto> Agenda;
@@ -39,10 +38,7 @@ public class Agenda {
 
     public static boolean listarContactos() {
         if (!Agenda.isEmpty()) {
-            Iterator it = Agenda.values().iterator();
-            while (it.hasNext()) {
-                System.out.println(it.next());
-            }
+            Agenda.values().stream().forEach(System.out::println);
             return true;
         }
         return false;
